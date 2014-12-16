@@ -11,7 +11,7 @@
 <section class="main-content">
     <md-content class="md-whiteframe-z1 md-padding">
         <md-list class="selectable-list">
-            <md-item ng-repeat="item in todos" ng-click="showTodo($event, item)">
+            <md-item ng-repeat="item in todos" ng-click="showTodo($event, $index, item)" ng-class="{selected: selectedIndex == $index}">
                 <md-item-content>
                     <div class="md-tile-left">
                         {{item.face}}
@@ -32,3 +32,6 @@
     </md-content>
 </section>
 
+<!--<md-button class="md-fab md-primary add-button" aria-label="New item" ng-click="showTodo($event)">-->
+    <!--<i class="mdi mdi-plus"></i>-->
+<!--</md-button>-->

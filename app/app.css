@@ -10,6 +10,16 @@ md-content.md-content-main {
     background: #fff;
 }
 
-.selectable-list md-item-content {
+.selectable-list md-item md-item-content {
     cursor: pointer;
+}
+
+.selectable-list md-item.selected md-item-content {
+    background: #fafafa;
+}
+
+.add-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
