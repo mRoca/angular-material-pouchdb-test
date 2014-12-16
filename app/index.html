@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/blue-theme.css">
+    <link rel="stylesheet" href="bower_components/mdi/materialdesignicons.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body layout="row" md-theme="blue">
+
+<!--[if lte IE 8]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-sm')">
+    <md-toolbar layout="column">
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+    </md-toolbar>
+
+    <md-content>
+        <md-list ng-controller="SidebarMenuCtrl">
+            <md-item>
+                <div class="md-tile-left">
+                    <!--<img ng-src="{{item.face}}" class="face" alt="{{item.who}}">-->
+                </div>
+                <div class="md-tile-content">
+                    <md-button class="md-primary" ng-href="#/view1" ng-click="close()">View 1</md-button>
+                </div>
+                <md-item>
+                    <div class="md-tile-left">
+                        <!--<img ng-src="{{item.face}}" class="face" alt="{{item.who}}">-->
+                    </div>
+                    <div class="md-tile-content">
+                        <md-button class="md-primary" ng-href="#/view2" ng-click="close()">View 2</md-button>
+                    </div>
+                </md-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+
+<div layout="column" layout-fill tabIndex="-1" role="main">
+    <md-toolbar ng-controller="ToolbarCtrl">
+        <div class="md-toolbar-tools">
+            <md-button aria-label="Toggle menu" hide-gt-sm ng-click="toggleLeft()">
+                <i class="mdi mdi-menu"></i>
+            </md-button>
+            <span class="md-flex">Toolbar</span>
+        </div>
+    </md-toolbar>
+
+    <md-content ng-view md-scroll-y flex class="md-padding md-content-main"></md-content>
+</div>
+
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/hammerjs/hammer.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+
+<script src="bower_components/pouchdb/dist/pouchdb.js"></script>
+<script src="components/pouchdb/angular-pouchdb.js"></script>
+<script src="components/pouchdb/ng-pouchdb-binding.js"></script>
+<script src="components/pouchdb/ng-pouchdb-collection.js"></script>
+
+<script src="app.js"></script>
+<script src="layout/layout.js"></script>
+<script src="view1/view1.js"></script>
+<script src="view2/view2.js"></script>
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
+
+</body>
+</html>

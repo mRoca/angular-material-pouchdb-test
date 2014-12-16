@@ -1,0 +1,49 @@
+<p>This is the partial for view 2.</p>
+
+<p>
+    Showing of 'interpolate' filter:
+    {{ 'Current version is v%VERSION%.' | interpolate }}
+</p>
+
+4-way binding with Remote Syncing:
+<md-button class="md-raised md-primary" ng-click="toggleOnline()">{{!online ? 'disabled' : 'enabled' }}</md-button>
+
+<form action="">
+    <label>
+        First Name
+        <input type="text" ng-model="userInfo.firstName">
+    </label>
+    <label>
+        Last Name
+        <input type="text" ng-model="userInfo.lastName">
+    </label>
+</form>
+
+<form>
+    <legend>Add A book to the Collection:</legend>
+    <label for="newBookTitle">Title</label>
+    <input type="text" ng-model="title" id="newBookTitle">
+    <label for="newBookDescription">Description</label>
+    <input type="text" ng-model="description" id="newBookDescription">
+    <button ng-click="books.$add({title: title, description: description})">Add</button>
+</form>
+<h5>The Library:</h5>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="book in books">
+        <td><input ng-model="book.title"></td>
+        <td><input ng-model="book.description"></td>
+        <td>
+            <button ng-click="books.$update(book)">Update</button>
+            <button ng-click="books.$remove(book)">Remove</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

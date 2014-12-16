@@ -1,0 +1,15 @@
+/* app css stylesheet */
+
+md-content.md-content-main {
+    background: #ececec;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 10px auto;
+    background: #fff;
+}
+
+.selectable-list md-item-content {
+    cursor: pointer;
+}

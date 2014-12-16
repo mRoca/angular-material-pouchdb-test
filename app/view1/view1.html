@@ -1,0 +1,34 @@
+<section class="main-content">
+    <md-content class="md-whiteframe-z1 md-padding">
+        <p>This is the partial for view 1.</p>
+
+        <div>Angular seed app: v<span app-version></span></div>
+
+        <md-button class="md-raised md-primary">Primary</md-button>
+    </md-content>
+</section>
+
+<section class="main-content">
+    <md-content class="md-whiteframe-z1 md-padding">
+        <md-list class="selectable-list">
+            <md-item ng-repeat="item in todos" ng-click="showTodo($event, item)">
+                <md-item-content>
+                    <div class="md-tile-left">
+                        {{item.face}}
+                    </div>
+                    <div class="md-tile-content">
+                        <h3>{{item.what}}</h3>
+                        <h4>{{item.who}}</h4>
+
+                        <p>
+                            {{item.notes}}
+                        </p>
+                    </div>
+                </md-item-content>
+                <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+        </md-list>
+
+    </md-content>
+</section>
+
