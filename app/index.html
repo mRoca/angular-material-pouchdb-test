@@ -25,22 +25,22 @@
     </md-toolbar>
 
     <md-content>
-        <md-list ng-controller="SidebarMenuCtrl">
+        <md-list ng-controller="SidebarMenuCtrl" class="sidebar-list">
             <md-item>
-                <div class="md-tile-left">
-                    <!--<img ng-src="{{item.face}}" class="face" alt="{{item.who}}">-->
-                </div>
-                <div class="md-tile-content">
-                    <md-button class="md-primary" ng-href="#/view1" ng-click="close()">View 1</md-button>
-                </div>
-                <md-item>
-                    <div class="md-tile-left">
-                        <!--<img ng-src="{{item.face}}" class="face" alt="{{item.who}}">-->
-                    </div>
-                    <div class="md-tile-content">
-                        <md-button class="md-primary" ng-href="#/view2" ng-click="close()">View 2</md-button>
-                    </div>
-                </md-item>
+                <md-item-content>
+                    <md-button class="md-primary" ng-href="#/view1" ng-class="{selected: currentPath == '/view1'}" ng-click="close()" flex>View 1</md-button>
+                </md-item-content>
+            </md-item>
+            <md-item>
+                <md-item-content>
+                    <md-button class="md-primary" ng-href="#/view2" ng-class="{selected: currentPath == '/view2'}" ng-click="close()" flex>View 2</md-button>
+                </md-item-content>
+            </md-item>
+            <md-item>
+                <md-item-content>
+                    <md-button class="md-primary" ng-href="#/view3" ng-class="{selected: currentPath == '/view3'}" ng-click="close()" flex>View 2</md-button>
+                </md-item-content>
+            </md-item>
         </md-list>
     </md-content>
 </md-sidenav>

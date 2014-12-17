@@ -39,3 +39,16 @@ md-input-group.long > input {
     width: 264px;
     max-width: 100%;
 }
+
+.sidebar-list md-item-content > a.md-button {
+    text-align: left;
+    padding: 15px;
+}
+
+.sidebar-list md-item-content > a.md-button:not([disabled]):not(.selected):focus {
+    background-color: transparent;
+}
+
+.sidebar-list md-item-content > a.md-button.selected {
+    background-color: #eee;
+}

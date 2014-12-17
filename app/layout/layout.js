@@ -33,7 +33,14 @@ angular.module('myApp.layout', ['ngMaterial'])
             $mdSidenav('left').toggle();
         };
     }])
-    .controller('SidebarMenuCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+    .controller('SidebarMenuCtrl', ['$scope', '$location', '$mdSidenav', function ($scope, $location, $mdSidenav) {
+
+        $scope.currentPath = $location.path();
+
+        $scope.$on('$routeChangeSuccess', function (next, last, t) {
+            $scope.currentPath = $location.path();
+        });
+
         $scope.close = function () {
             $mdSidenav('left').close();
         };

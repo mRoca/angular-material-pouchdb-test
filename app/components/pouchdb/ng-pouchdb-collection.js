@@ -26,7 +26,7 @@ angular.module('pouchdb')
          * @return {Array}                An array that will hold the items in the collection
          */
         return function (collectionUrl) {
-            var displayLogs = true;
+            var displayLogs = false;
             var collection = [];
             var indexes = {};
             var db = collection.$db = pouchdb.create(collectionUrl);
