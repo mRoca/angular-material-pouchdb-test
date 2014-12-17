@@ -12,11 +12,6 @@ angular.module('myApp.view2', ['ngRoute', 'pouchdb'])
     .controller('View2Ctrl', ['$scope', 'pouchCollection', 'pouchBindingSimple', function ($scope, pouchCollection, pouchBindingSimple) {
         $scope.books = pouchCollection('books');
 
-        $scope.userInfo = {
-            firstName: 'Jo', lastName: 'Bloggs'
-        };
-        pouchBindingSimple('user-info', $scope, 'userInfo');
-
         $scope.online = false;
         $scope.toggleOnline = function () {
             $scope.online = !$scope.online;

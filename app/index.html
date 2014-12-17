@@ -9,6 +9,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="bower_components/angular-material/themes/blue-theme.css">
+    <link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css">
     <link rel="stylesheet" href="bower_components/mdi/materialdesignicons.css">
     <link rel="stylesheet" href="app.css">
 </head>
@@ -56,7 +57,7 @@
 
     <md-content ng-view md-scroll-y flex class="md-padding md-content-main"></md-content>
 
-    <section ng-controller="AddButton">
+    <section class="add-button-container" ng-controller="AddButton">
         <md-button class="md-fab md-primary add-button" aria-label="New item" ng-click="addButtonAction($event)" ng-if="addButtonAction">
             <i class="mdi mdi-plus"></i>
         </md-button>

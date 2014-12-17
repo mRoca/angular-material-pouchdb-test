@@ -23,3 +23,19 @@ md-content.md-content-main {
     bottom: 20px;
     right: 20px;
 }
+
+.row > * {
+    font-size: inherit;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.row .md-button {
+    font-size: inherit;
+    margin: 8px;
+}
+
+md-input-group.long > input {
+    width: 264px;
+    max-width: 100%;
+}
