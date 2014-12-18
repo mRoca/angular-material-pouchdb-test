@@ -9,22 +9,20 @@ angular.module('myApp.view2', ['ngRoute', 'pouchdb'])
         });
     }])
 
-    .controller('View2Ctrl', ['$scope', 'pouchCollection', 'pouchBindingSimple', function ($scope, pouchCollection, pouchBindingSimple) {
-        $scope.books = pouchCollection('books');
-
+    .controller('View2Ctrl', ['$scope', 'pouchdb', function ($scope, pouchdb) {
+        $scope.books = pouchdb.createCollection('books');
         $scope.online = false;
         $scope.toggleOnline = function () {
             $scope.online = !$scope.online;
 
-            if ($scope.online) {  // Read http://pouchdb.com/api.html#sync
+            if ($scope.online) {
+
+                //$scope.sync = $scope.books.$db.replicate.sync(result.db, {live: true})
                 $scope.sync = $scope.books.$db.replicate.sync('http://localhost:5984/books', {live: true})
                     .on('error', function (err) {
-                        console.log("Syncing stopped");
                         $scope.online = false;
-                        console.log(err);
+                        console.log("Syncing stopped", err);
                     });
-            } else {
-                $scope.sync.cancel();
             }
         };
 

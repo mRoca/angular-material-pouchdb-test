@@ -37,7 +37,7 @@ angular.module('myApp.layout', ['ngMaterial'])
 
         $scope.currentPath = $location.path();
 
-        $scope.$on('$routeChangeSuccess', function (next, last, t) {
+        $scope.$on('$routeChangeSuccess', function () {
             $scope.currentPath = $location.path();
         });
 
