@@ -7,12 +7,12 @@
  */
 
 
-var app = angular.module('pouchdb', []);
+var app = angular.module('pouchdb', ['crypto']);
 
 app.provider('pouchdb', function () {
 
     return {
-        $get: ['$q', '$rootScope', '$parse', function ($q, $rootScope, $parse) {
+        $get: ['$q', '$rootScope', '$parse', 'crypto', function ($q, $rootScope, $parse, crypto) {
 
             // Transform Pouch promises into $q ones
             var qify = function (fn) {
@@ -53,17 +53,47 @@ app.provider('pouchdb', function () {
 
             return {
                 displayLogs: true,
+                syncServer: 'http://localhost:5984/',
                 log: function (args) {
                     this.displayLogs && console.log.apply(console, arguments);
                 },
                 error: function (obj) {
                     console.error(arguments);
                 },
-                createDB: function (collectionName, options) {
+                createDB: function (collectionName, options, disableEncryption) {
 
+                    var self = this;
                     var db = new PouchDB(collectionName, options);
 
+                    if (!disableEncryption) {
+                        db.filter({
+                            incoming: function (doc) {
+                                console.log('incoming', doc);
+
+                                for (var field in doc) {
+                                    if (doc.hasOwnProperty(field) && field !== '_id' && field !== '_rev') {
+                                        doc[field] = crypto.encrypt(doc[field]);
+                                    }
+                                }
+
+                                return doc;
+                            },
+                            outgoing: function (doc) {
+                                console.log('outgoing', doc);
+
+                                for (var field in doc) {
+                                    if (doc.hasOwnProperty(field) && field !== '_id' && field !== '_rev' && doc[field].match(/^\{.*\}$/)) {
+                                        doc[field] = crypto.decrypt(doc[field]);
+                                    }
+                                }
+
+                                return doc;
+                            }
+                        });
+                    }
+
                     return {
+                        _name: collectionName,
                         id: db.id,
                         put: qify(db.put.bind(db)),
                         post: qify(db.post.bind(db)),
@@ -114,18 +144,58 @@ app.provider('pouchdb', function () {
                             from: db.replicate.from.bind(db),
                             sync: db.replicate.sync.bind(db)
                         },
+                        sync: function () {
+                            self.syncDB(this);
+                        },
                         destroy: qify(db.destroy.bind(db))
                     };
+                },
+                syncDB: function (db) {
+                    var self = this;
+
+                    if (!db.replicate || !db._name) {
+                        return null;
+                    }
+
+                    return db.replicate
+                        .sync(self.syncServer + db._name, {
+                            live: true,
+                            filter: function (obj, t, u, v) {
+                                console.log('SYNC filter', obj, t, u, v);
+                                obj.ramnnn = 'toto';
+                                return obj;
+                            }
+                        })
+                        .on('error', function (err) {
+                            self.error("Syncing stopped for db " + db._name, err);
+                        })
+                        .on('change', function (info) {
+                            console.log('change event');
+                            console.log(info);
+                        })
+                        .on('complete', function (info) {
+                            console.log('complete event');
+                            console.log(info);
+                        })
+                        .on('uptodate', function (info) {
+                            console.log('uptodate event');
+                            console.log(info);
+                        })
+                        ;
                 },
                 /**
                  * @return {Array} An array that will hold the items in the collection
                  */
-                createCollection: function (collectionName) {
+                createCollection: function (collectionName, syncDb) {
 
                     var self = this;
                     var collection = [];
                     var indexes = {};
                     var db = collection.$db = this.createDB(collectionName);
+
+                    if (syncDb) {
+                        self.syncDB(db);
+                    }
 
                     function addChild(index, item) {
                         indexes[item._id] = index;
@@ -170,7 +240,7 @@ app.provider('pouchdb', function () {
                     db.changes({
                         live: true,
                         onChange: function (change) {
-                            self.log('change', change);
+                            //self.log('change', change);
 
                             if (!change.deleted) {
                                 db.get(change.id).then(function (data) {
@@ -228,7 +298,7 @@ app.provider('pouchdb', function () {
                  * There is no promise provided.
                  * @returns {Function} Returns a deregistration function for this listener.
                  */
-                createBinding: function (collectionName, scope, expression) {
+                createBinding: function (collectionName, scope, expression, syncDb) {
 
                     var self = this;
                     var getObj = $parse(expression);
@@ -239,6 +309,10 @@ app.provider('pouchdb', function () {
                     }
 
                     var db = this.createDB(collectionName);
+
+                    if (syncDb) {
+                        self.syncDB(db);
+                    }
 
                     db.get(expression).then(
                         function (res) {
@@ -306,7 +380,3 @@ app.provider('pouchdb', function () {
         }]
     };
 });
-
-//app.config(function () {
-//
-//});
